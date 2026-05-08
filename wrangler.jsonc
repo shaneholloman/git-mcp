@@ -25,6 +25,14 @@
       "new_sqlite_classes": ["MyMCP"],
       "tag": "v1",
     },
+    {
+      "new_classes": ["ViewCounterDO"],
+      "tag": "v2",
+    },
+    {
+      "deleted_classes": ["ViewCounterDO"],
+      "tag": "v3",
+    },
   ],
   "durable_objects": {
     "bindings": [
