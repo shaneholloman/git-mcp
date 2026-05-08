@@ -119,6 +119,18 @@ export default {
       return handleCorsPreflightRequest();
     }
 
+    // MCP clients probe these per RFC 9728 / RFC 8414 to discover OAuth
+    // metadata. We don't require OAuth, so 404 lets clients fall through to
+    // unauthenticated mode instead of routing into MyMCP and polluting logs.
+    if (
+      pathname === "/.well-known/oauth-protected-resource" ||
+      pathname.startsWith("/.well-known/oauth-protected-resource/") ||
+      pathname === "/.well-known/oauth-authorization-server" ||
+      pathname.startsWith("/.well-known/oauth-authorization-server/")
+    ) {
+      return new Response("Not Found", { status: 404 });
+    }
+
     // Handle badge requests
     if (pathname.startsWith("/badge/")) {
       const parts = pathname.split("/").filter(Boolean);
